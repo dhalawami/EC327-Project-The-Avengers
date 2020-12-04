@@ -8,6 +8,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
@@ -29,9 +33,11 @@ public class GameView extends SurfaceView implements Runnable {
     private double deltaSpeed = 0.3; // increases speed of ball with time
     public static double speed = 10;
     private GameActivity activity;
+    private SoundPool soundPool;
     public static float screenRatioX, screenRatioY;   // to make sure it is compatible with different screen sizes
     private GameOverTxt gameOverTxt;
     private Button StartAgain;
+    private int sound;
     public static int count = 0;
     private SharedPreferences prefs;
 
@@ -42,6 +48,20 @@ public class GameView extends SurfaceView implements Runnable {
 
         this.activity = activity;
         prefs = activity.getSharedPreferences("game", Context.MODE_PRIVATE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                    .setUsage(AudioAttributes.USAGE_GAME)
+                    .build();
+
+            soundPool = new SoundPool.Builder()
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+
+        //sound = soundPool.load(activity,R.raw.GameOver, 1);
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -67,7 +87,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
         random = new Random();
-
+        //speed = 10;
         // Initialize game panels
         gameOverTxt = new GameOverTxt(getContext());
         isGameOver = false;
@@ -111,6 +131,9 @@ public class GameView extends SurfaceView implements Runnable {
         background1.y -= speed;
         background2.y -= speed;
 
+        for(Hole hole : holes) {
+            hole.speed = speed;
+        }
 
         //checks if background is completely off the screen
         if (background1.y + background1.background.getHeight() < 0){
@@ -198,6 +221,9 @@ public class GameView extends SurfaceView implements Runnable {
                 waitBeforeExiting();
                 saveIfHighScore();
                 setCurrentScore();
+                if(!prefs.getBoolean("isMute", false)) {
+                    //soundPool.play(sound, 1,1,0,0,1);
+                }
                 getHolder().unlockCanvasAndPost(canvas);
                 return;
                 //GameActivity.LaunchGameOver();
