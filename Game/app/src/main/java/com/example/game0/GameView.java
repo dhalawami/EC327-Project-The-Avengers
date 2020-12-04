@@ -121,7 +121,7 @@ public class GameView extends SurfaceView implements Runnable {
 
 
 
-
+        score++;
         count++;
         if (count == 150 && speed < 25) {
             speed*= (1 + deltaSpeed);
@@ -176,7 +176,7 @@ public class GameView extends SurfaceView implements Runnable {
             // check if off screen
             if (hole.y + hole.height < 0) {
                 hole.y = screenY;
-                score++;        // score changes
+                //score++;        // score changes
 
                 // ensures visibility within screen window
                 hole.x = random.nextInt(screenX - hole.width);
@@ -210,7 +210,7 @@ public class GameView extends SurfaceView implements Runnable {
                 canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
             }
 
-            canvas.drawText((score-1) + "", screenX/2, screenY- 164, paint);
+            canvas.drawText((score/10) + "", screenX/2 - 50, screenY- 164, paint);
             // drawing ball
             canvas.drawBitmap(ball.getBall(), ball.x, ball.y, paint);
 
