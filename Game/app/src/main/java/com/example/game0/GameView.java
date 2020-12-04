@@ -41,8 +41,8 @@ public class GameView extends SurfaceView implements Runnable {
     public static int count = 0;
     private SharedPreferences prefs;
     private int HoleRow = 0;
-    private int HoleNum = 4;
-    private int deltaY = 250;
+    private int HoleNum = 5;
+    private int deltaY = 450;
 
 
     public GameView(GameActivity activity, int screenX, int screenY) {
@@ -88,6 +88,7 @@ public class GameView extends SurfaceView implements Runnable {
             //holes[i] = hole;
             Hole hole = new Hole(getResources(), speed, i * deltaY);
             holes[i] = hole;
+
 //////////////////
             /*
             if (i == 0) {
@@ -310,6 +311,9 @@ public class GameView extends SurfaceView implements Runnable {
     }
 
     private void waitBeforeExiting() {
+        activity.startActivity(new Intent(activity, GameOver.class));
+        activity.finish();
+        /*
         try {
             Thread.sleep(500);
             activity.startActivity(new Intent(activity, GameOver.class));
@@ -317,6 +321,7 @@ public class GameView extends SurfaceView implements Runnable {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+         */
     }
 
     public void resume () {
