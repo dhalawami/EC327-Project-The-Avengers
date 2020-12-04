@@ -10,15 +10,16 @@ import static com.example.game0.GameView.screenRatioY;
 
 public class Hole {
 
-    public double speed = 10;
+    public double speed;
     int x = 0, y, width, height;
     Bitmap hole;
 
-    Hole (Resources res) {
+    Hole (Resources res, double speed) {
         hole = BitmapFactory.decodeResource(res, R.drawable.hole);
 
         //speed = GameView.speed;
 
+        this.speed = speed;
         width = hole.getWidth();
         height = hole.getHeight();
 

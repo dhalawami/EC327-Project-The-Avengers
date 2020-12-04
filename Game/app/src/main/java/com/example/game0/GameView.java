@@ -26,8 +26,8 @@ public class GameView extends SurfaceView implements Runnable {
     private Ball ball;
     private Hole[] holes;
     public Random random;
-    private double deltaSpeed = 0.1; // increases speed of ball with time
-    public static double speed = 100;
+    private double deltaSpeed = 0.3; // increases speed of ball with time
+    public static double speed = 10;
     private GameActivity activity;
     public static float screenRatioX, screenRatioY;   // to make sure it is compatible with different screen sizes
     private GameOverTxt gameOverTxt;
@@ -62,7 +62,7 @@ public class GameView extends SurfaceView implements Runnable {
         holes = new Hole[2];
 
         for(int i = 0; i < 2; i++){
-            Hole hole = new Hole(getResources());
+            Hole hole = new Hole(getResources(), speed);
             holes[i] = hole;
         }
 
@@ -101,19 +101,15 @@ public class GameView extends SurfaceView implements Runnable {
 
 
 
-/*
-        //count++;
-        if (count == 150 && speed < 250) {
-            speed*= 1.02;
+
+        count++;
+        if (count == 150 && speed < 25) {
+            speed*= (1 + deltaSpeed);
             count = 0;
         }
-        //background1.y -= speed;
-        //background2.y -= speed;
 
-
- */
-        background1.y -= speed * deltaSpeed;
-        background2.y -= speed * deltaSpeed;
+        background1.y -= speed;
+        background2.y -= speed;
 
 
         //checks if background is completely off the screen
