@@ -11,10 +11,10 @@ import static com.example.game0.GameView.screenRatioY;
 public class Hole {
 
     public double speed;
-    int x = 0, y, width, height;
+    int x = 0, y, width, height, deltaY;
     Bitmap hole;
 
-    Hole (Resources res, double speed) {
+    Hole (Resources res, double speed, int deltaY) {
         hole = BitmapFactory.decodeResource(res, R.drawable.hole);
 
         //speed = GameView.speed;
@@ -22,6 +22,7 @@ public class Hole {
         this.speed = speed;
         width = hole.getWidth();
         height = hole.getHeight();
+        this.deltaY = deltaY;
 
         // reducing size
         width /= 8;
@@ -35,7 +36,8 @@ public class Hole {
         hole = Bitmap.createScaledBitmap(hole, width, height, false);
 
         // setting initial location of hole
-        y = -height;
+        y = -(height - deltaY);
+
 
     }
 

@@ -40,7 +40,9 @@ public class GameView extends SurfaceView implements Runnable {
     private int sound;
     public static int count = 0;
     private SharedPreferences prefs;
-
+    private int HoleRow = 0;
+    private int HoleNum = 4;
+    private int deltaY = 250;
 
 
     public GameView(GameActivity activity, int screenX, int screenY) {
@@ -79,12 +81,37 @@ public class GameView extends SurfaceView implements Runnable {
         paint.setTextSize(128);
         paint.setColor(Color.WHITE);
 
-        holes = new Hole[2];
+        holes = new Hole[HoleNum];
 
-        for(int i = 0; i < 2; i++){
-            Hole hole = new Hole(getResources(), speed);
+        for(int i = 0; i < HoleNum; i++){
+            //Hole hole = new Hole(getResources(), speed);
+            //holes[i] = hole;
+            Hole hole = new Hole(getResources(), speed, i * deltaY);
             holes[i] = hole;
+//////////////////
+            /*
+            if (i == 0) {
+                Hole hole = new Hole(getResources(), speed, 0 * deltaY);
+                holes[i] = hole;
+            } else if (i == 1){
+                Hole hole = new Hole(getResources(), speed, 1 * deltaY);
+                holes[i] = hole;
+            } else if (i == 2){
+                Hole hole = new Hole(getResources(), speed, 2 * deltaY);
+                holes[i] = hole;
+            } else if (i == 3){
+                Hole hole = new Hole(getResources(), speed, 3* deltaY);
+                holes[i] = hole;
+            }
+
+             */
+///////////
+
         }
+
+        //////////////////////////
+
+        //////////////////////////
 
         random = new Random();
         //speed = 10;
@@ -207,7 +234,30 @@ public class GameView extends SurfaceView implements Runnable {
 
             // drawing holes
             for (Hole hole : holes) {
+
                 canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
+/*
+                if (HoleRow == 0) {
+                    HoleRow++;
+                    canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
+
+                } else if (HoleRow == 1){
+                    hole.y = hole.y - (2 * hole.height);
+                    canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
+
+                    HoleRow++;
+                } else if (HoleRow == 2){
+                    hole.y = hole.y - (4 * hole.height);
+                    canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
+
+                    HoleRow++;
+                } else if (HoleRow == 3){
+                    hole.y = hole.y - (6 * hole.height);
+                    canvas.drawBitmap(hole.getHole(), hole.x, hole.y, paint);
+
+                    HoleRow=0;
+                }
+*/
             }
 
             canvas.drawText((score/10) + "", screenX/2 - 50, screenY- 164, paint);
