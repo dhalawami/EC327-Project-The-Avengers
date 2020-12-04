@@ -197,6 +197,7 @@ public class GameView extends SurfaceView implements Runnable {
                 isPlaying = false; //breaks thread
                 waitBeforeExiting();
                 saveIfHighScore();
+                setCurrentScore();
                 getHolder().unlockCanvasAndPost(canvas);
                 return;
                 //GameActivity.LaunchGameOver();
@@ -224,6 +225,12 @@ public class GameView extends SurfaceView implements Runnable {
             editor.putInt("highscore", score);
             editor.apply();
         }
+    }
+
+    private void setCurrentScore() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("currentScore", score);
+        editor.apply();
     }
 
     private void waitBeforeExiting() {

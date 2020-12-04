@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.view.SurfaceView;
 import android.graphics.Canvas;
+import android.widget.TextView;
 
 
 public class GameOver extends AppCompatActivity {
@@ -31,5 +33,14 @@ public class GameOver extends AppCompatActivity {
                 startActivity(new Intent(GameOver.this, GameActivity.class));
             }
         });
+
+        TextView highScoreTxt = findViewById(R.id.highScoreTxt);
+
+        SharedPreferences prefs = getSharedPreferences("game", MODE_PRIVATE);
+        highScoreTxt.setText("HighScore: "+(prefs.getInt("highscore", 0)));
+
+        TextView currentScoreTxt = findViewById(R.id.currentScoreTxt);
+        currentScoreTxt.setText("Score: "+(prefs.getInt("currentScore", 0)));
+
     }
 }
