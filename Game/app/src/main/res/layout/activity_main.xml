@@ -21,7 +21,7 @@
         android:shadowDx="1"
         android:shadowDy="1"
         android:shadowRadius="2"
-        android:text="Don't Drop the Marble!"
+        android:text="Don't Drop the Ball!"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="48sp"
@@ -76,5 +76,6 @@
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.971" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

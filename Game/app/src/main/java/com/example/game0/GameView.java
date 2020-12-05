@@ -31,7 +31,7 @@ public class GameView extends SurfaceView implements Runnable {
     private Hole[] holes;
     public Random random;
     private double deltaSpeed = 0.3; // increases speed of ball with time
-    public static double speed = 10;
+    public static double speed;
     private GameActivity activity;
     private SoundPool soundPool;
     public static float screenRatioX, screenRatioY;   // to make sure it is compatible with different screen sizes
@@ -119,6 +119,7 @@ public class GameView extends SurfaceView implements Runnable {
         // Initialize game panels
         gameOverTxt = new GameOverTxt(getContext());
         isGameOver = false;
+        speed = 10;
         /*
         SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
