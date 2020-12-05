@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView volumeCtrl = findViewById(R.id.volumeCtrl);
 
         if (isMute)
-            volumeCtrl.setImageAlpha(R.drawable.ic_baseline_volume_off_24);
+            volumeCtrl.setImageResource(R.drawable.ic_baseline_volume_off_24);
         else
             volumeCtrl.setImageResource(R.drawable.ic_baseline_volume_up_24);
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 isMute = !isMute;
                 if (isMute)
-                    volumeCtrl.setImageAlpha(R.drawable.ic_baseline_volume_off_24);
+                    volumeCtrl.setImageResource(R.drawable.ic_baseline_volume_off_24);
                 else
                     volumeCtrl.setImageResource(R.drawable.ic_baseline_volume_up_24);
 

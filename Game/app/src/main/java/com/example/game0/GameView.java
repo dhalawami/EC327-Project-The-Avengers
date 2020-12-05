@@ -42,7 +42,7 @@ public class GameView extends SurfaceView implements Runnable {
     private SharedPreferences prefs;
     private int HoleRow = 0;
     private int HoleNum = 5;
-    private int deltaY = 450;
+    private int deltaY = 500;
 
 
     public GameView(GameActivity activity, int screenX, int screenY) {
@@ -63,7 +63,7 @@ public class GameView extends SurfaceView implements Runnable {
         } else
             soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
-        //sound = soundPool.load(activity,R.raw.GameOver, 1);
+        sound = soundPool.load(activity,R.raw.gameover, 1);
 
         this.screenX = screenX;
         this.screenY = screenY;
@@ -119,7 +119,7 @@ public class GameView extends SurfaceView implements Runnable {
         // Initialize game panels
         gameOverTxt = new GameOverTxt(getContext());
         isGameOver = false;
-        speed = 10;
+        speed = 12;
         /*
         SharedPreferences sharedPreferences = context.getSharedPreferences("MySharedPref", context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -274,7 +274,7 @@ public class GameView extends SurfaceView implements Runnable {
                 saveIfHighScore();
                 setCurrentScore();
                 if(!prefs.getBoolean("isMute", false)) {
-                    //soundPool.play(sound, 1,1,0,0,1);
+                    soundPool.play(sound, 1,1,0,0,1);
                 }
                 getHolder().unlockCanvasAndPost(canvas);
                 return;
