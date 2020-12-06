@@ -14,6 +14,7 @@ public class Ball {
     public boolean isGoingRight = false;
     int x, y, width, height, ballCounter = 0;
     Bitmap ball1, ball2;
+    public float speedX;
 
     Ball(int screenX, Resources res) {
 
@@ -61,4 +62,25 @@ public class Ball {
         return new Rect(x, y, x + width, y + height);
     }
 
+    public void updateSpeed(float angle) {
+        
+        final int maxSpeed = 40; // max speed of ball
+        final int minSpeed = 0; // min speed of ball
+        final double minAngle = Math.PI / 36; // angle at which ball achieve max speed
+        final double maxAngle = Math.PI / 4; // angle at which ball starts getting speed
+
+        // set speed to zero if absolute value of angle is less than 5 degrees
+        if (Math.abs(angle) < minAngle) {
+            speedX = minSpeed * Math.signum(angle);
+        }
+        // cap speed at 60 if angle is greater than 60 degrees
+        else if(Math.abs(angle) > maxAngle) {
+            speedX = maxSpeed * Math.signum(angle);
+        } else {
+            // speed vs angle will be speed = m(angle) + b where m is the rate of speed vs angel
+            // and b is the minimum speed
+            double speed_angle_rate = (maxSpeed - minSpeed) / (maxAngle - minAngle);
+            speedX = (float)  (Math.signum(angle) * speed_angle_rate * (Math.abs(angle) - minAngle) + minSpeed);
+        }
+    }
 }
