@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity {
 
+    MediaPlayer player;
     private GameView gameView;
     //private Button StartAgain;
     //SharedPreferences sharedPreferences;
@@ -27,6 +30,19 @@ public class GameActivity extends AppCompatActivity {
         gameView = new GameView(this, point.x, point.y);
 
         setContentView(gameView);
+
+        if(player == null)
+        {
+            player = MediaPlayer.create(this, R.raw.vibe_mountain);
+            player.setOnCompletionListener((new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlayer();
+                }
+            }));
+        }
+        player.start();
+
         //Button playAgain = (Button) findViewById(R.id.play_again);
 
 
@@ -43,6 +59,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if(player != null)
+        {
+            player.pause();
+        }
         gameView.pause();
 
     }
@@ -51,6 +71,25 @@ public class GameActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         gameView.resume();
+        player.start();
+
+    }
+
+    private void stopPlayer()
+    {
+        if(player != null)
+        {
+            player.release();
+            player = null;
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        stopPlayer();
+    }
 
 
         /*
@@ -92,7 +131,7 @@ public class GameActivity extends AppCompatActivity {
 
         }
 */
-    }
+
 
     /*
      public static LaunchGameOver() {
@@ -112,3 +151,4 @@ public class GameActivity extends AppCompatActivity {
     }
  */
 }
+
