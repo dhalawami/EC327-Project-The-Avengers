@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    MediaPlayer player;
     private boolean isMute;
 
     @Override
@@ -29,7 +30,23 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, GameActivity.class));
 
             }
+
         });
+
+        player = MediaPlayer.create(this, R.raw.cartoon_music);
+        player.setLooping(true);
+        player.start();
+        /*if(player == null)
+        {
+            player = MediaPlayer.create(this, R.raw.cartoon_music);
+            player.setOnCompletionListener((new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlayer();
+                }
+            }));
+        }
+        player.start(); */
 
 
         TextView highScoreTxt = findViewById(R.id.highScoreTxt);
@@ -59,6 +76,23 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
             }
         });
+
+
+    }
+    private void stopPlayer()
+    {
+        if(player != null)
+        {
+            player.release();
+            player = null;
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        stopPlayer();
     }
 
 

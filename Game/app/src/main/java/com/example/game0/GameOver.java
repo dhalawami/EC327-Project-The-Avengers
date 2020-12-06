@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Surface;
 import android.view.View;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 
 public class GameOver extends AppCompatActivity {
     private boolean isMute;
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,19 @@ public class GameOver extends AppCompatActivity {
                 startActivity(new Intent(GameOver.this, GameActivity.class));
             }
         });
+
+        if(player == null)
+        {
+            player = MediaPlayer.create(this, R.raw.cartoon_music);
+            player.setOnCompletionListener((new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    stopPlayer();
+                }
+            }));
+        }
+        player.start();
+        player.setLooping(true);
 
         TextView highScoreTxt = findViewById(R.id.highScoreTxt);
 
@@ -69,5 +84,21 @@ public class GameOver extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void stopPlayer()
+    {
+        if(player != null)
+        {
+            player.release();
+            player = null;
+        }
+    }
+
+    @Override
+    protected void onStop()
+    {
+        super.onStop();
+        stopPlayer();
     }
 }

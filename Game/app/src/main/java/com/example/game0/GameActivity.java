@@ -42,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
             }));
         }
         player.start();
+        player.setLooping(true);
 
         //Button playAgain = (Button) findViewById(R.id.play_again);
 
