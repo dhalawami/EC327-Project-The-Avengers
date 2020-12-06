@@ -300,14 +300,14 @@ public class GameView extends SurfaceView implements Runnable {
     private void saveIfHighScore() {
         if(prefs.getInt("highscore", 0) < score) {
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("highscore", score);
+            editor.putInt("highscore", score/10);
             editor.apply();
         }
     }
 
     private void setCurrentScore() {
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("currentScore", score);
+        editor.putInt("currentScore", score/10);
         editor.apply();
     }
 
