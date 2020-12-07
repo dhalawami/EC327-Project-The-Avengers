@@ -22,14 +22,15 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     private GameView gameView;
     //private Button StartAgain;
     //SharedPreferences sharedPreferences;
+    // sensor manager
     private SensorManager sensorManager;
-    private Sensor mAccelerometer;
-    private Sensor mMagneticField;
-    private float[] gravityVector;
-    private float[] geomagneticVector;
-    public float roll;
-    public float pitch;
-    public float azimuth;
+    private Sensor mAccelerometer; // accelerometer sensor
+    private Sensor mMagneticField; // magnetic field sensor
+    private float[] gravityVector; // gravity vector from accelerometer sensor
+    private float[] geomagneticVector; // geomagnetic vector from the magnetic field sensor
+    public float roll; // angle of rotation about the y-axis: vertical and pointing up
+    public float pitch; // angle of rotation about the x-axis: horizontal and pointing towards the right of screen
+    public float azimuth; // angle of rotation about the z-axis: pointing towards outside of screen face
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +67,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             startActivity(new Intent(GameActivity.this, MainActivity.class));
 
         }*/
-        //Sensors data
+        //Sensors members
         sensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
         mMagneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
         mAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -74,10 +75,11 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
         geomagneticVector = new float[3];
 
     }
+    // function is called when
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
 
-        this.updateRoll();
+        this.updateOrientation();
     }
 
     @Override
@@ -88,24 +90,27 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
             player.pause();
         }
         gameView.pause();
-        sensorManager.unregisterListener(this);
+        sensorManager.unregisterListener(this); // unregister sensors
 
     }
-    
+
+    // Function is called in the event that one of the sensor's values change
     @Override
     public final void onSensorChanged(SensorEvent event) {
 
-        // if accelerometer changes values
-        if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            System.arraycopy(event.values, 0, gravityVector, 0, 3);
-            // if geomagnetic sensor is different
-        } else if(event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-            System.arraycopy(event.values, 0, geomagneticVector, 0, 3);
+        switch (event.sensor.getType()) {
+            case Sensor.TYPE_ACCELEROMETER: // if sensor event is from accelerometer
+                System.arraycopy(event.values, 0, gravityVector, 0, 3);
+                break;
+
+            case Sensor.TYPE_MAGNETIC_FIELD: // if sensor event if from magnetic field sensor
+                System.arraycopy(event.values, 0, geomagneticVector, 0, 3);
+                break;
         }
 
-        this.updateRoll();
+        this.updateOrientation();
     }
-     private void updateRoll() {
+     private void updateOrientation() {
 
         float[] R = new float[9];
         boolean success = SensorManager.getRotationMatrix(R, null, gravityVector, geomagneticVector);
@@ -121,6 +126,7 @@ public class GameActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onResume() {
         super.onResume();
+        // registers sensors
         sensorManager.registerListener(this, mAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, mMagneticField, SensorManager.SENSOR_DELAY_NORMAL);
         gameView.resume();

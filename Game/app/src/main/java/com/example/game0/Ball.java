@@ -67,13 +67,13 @@ public class Ball {
         final int maxSpeed = 40; // max speed of ball
         final int minSpeed = 0; // min speed of ball
         final double minAngle = Math.PI / 36; // angle at which ball achieve max speed
-        final double maxAngle = Math.PI / 4; // angle at which ball starts getting speed
+        final double maxAngle = Math.PI / 4; // angle at which ball speed becomes non-zero
 
         // set speed to zero if absolute value of angle is less than 5 degrees
         if (Math.abs(angle) < minAngle) {
             speedX = minSpeed * Math.signum(angle);
         }
-        // cap speed at 60 if angle is greater than 60 degrees
+        // cap speed at maxSpeed if angle is greater than maxAngle
         else if(Math.abs(angle) > maxAngle) {
             speedX = maxSpeed * Math.signum(angle);
         } else {
