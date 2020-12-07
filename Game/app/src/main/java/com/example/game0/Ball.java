@@ -64,7 +64,7 @@ public class Ball {
 
     public void updateSpeed(float angle) {
         
-        final int maxSpeed = 40; // max speed of ball
+        final int maxSpeed = 35; // max speed of ball
         final int minSpeed = 0; // min speed of ball
         final double minAngle = Math.PI / 36; // angle at which ball achieve max speed
         final double maxAngle = Math.PI / 4; // angle at which ball speed becomes non-zero
