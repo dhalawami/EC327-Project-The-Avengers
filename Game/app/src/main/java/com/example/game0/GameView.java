@@ -173,7 +173,7 @@ public class GameView extends SurfaceView implements Runnable {
             background2.y = screenY;
         }
 
-        /*
+/*
         // checks if motion of ball is implemented
         if (ball.isGoingRight) {
             ball.x += 30;
@@ -184,7 +184,7 @@ public class GameView extends SurfaceView implements Runnable {
             ball.x -= 30;
             // ball.x -= 30 * screenRatioX;
         }
-        */
+*/
         ball.updateSpeed(activity.roll);
         ball.x += ball.speedX;
 
@@ -362,7 +362,7 @@ public class GameView extends SurfaceView implements Runnable {
         }
 
     }
-
+/*
     @Override
     public boolean onTouchEvent(MotionEvent event) {
     // Change this to be compatible with gyroscope input
@@ -385,7 +385,7 @@ public class GameView extends SurfaceView implements Runnable {
 
         return true;
 
-    }
+    }*/
 
     /*
     public static boolean LastTry() {
