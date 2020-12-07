@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Game0</string>
+    <string name="imageview">imageView</string>
+    <string name="high_score">High Score:</string>
+    <string name="don_t_lose_the_ball">Don\'t Lose the Ball!</string>
+    <string name="play">PLAY</string>
+    <string name="todo">TODO</string>
+    <string name="play_again">PLAY AGAIN</string>
+    <string name="score">Score:</string>
+    <string name="you_lost_the_ball">You Lost the Ball!</string>
 </resources>
